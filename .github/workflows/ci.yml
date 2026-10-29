@@ -18,20 +18,33 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 3
 
+    services:
+      mongodb:
+        image: mongo:9.0.4
+
+        ports:
+          - 27017:27017
+
+        options: >-
+          --health-cmd "mongosh --quiet --eval 'db.adminCommand({ping:1})'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 12
+          --health-start-period 10s
+    env:
+      MONGODB_DB: feblog_ci
+      MONGODB_URI: mongodb://127.0.0.1:27017/feblog_ci
+
     steps:
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v6
-
-      - name: "🛠️ Set up environment"
-        run: |
-          mv .env.example .env
 
       - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v4
         with:
           version: "11.3.0"
 
-      - name: Use Node.js
+      - name: "⚙️ Use Node.js"
         uses: actions/setup-node@v4
         with:
           node-version: "24"
@@ -46,5 +59,14 @@ jobs:
       - name: "📝 Checking code format"
         run: pnpm run format:check
 
+      - name: "🌱 Seed CI database"
+        run: node scripts/seed-ci.mjs
+
       - name: "🚀 Build the project"
         run: pnpm run build
+
+      - name: "📄 Show MongoDB logs on failure"
+        if: failure()
+        env:
+          MONGO_CONTAINER_ID: ${{ job.services.mongodb.id }}
+        run: docker logs "$MONGO_CONTAINER_ID"
