@@ -19,6 +19,9 @@ jobs:
     timeout-minutes: 3
 
     steps:
+      - name: "🛠️ Set up environment"
+        run: |
+          mv .env.example .env
       - name: "☁️ Checkout repository"
         uses: actions/checkout@v4
 
