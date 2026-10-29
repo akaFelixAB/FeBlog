@@ -29,5 +29,6 @@ public/pagefind
 # pnpm
 .pnpm-store
 
-# docker compose
+# docker
 compose.override.yaml
+mongo_data/
