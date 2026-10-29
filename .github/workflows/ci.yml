@@ -19,11 +19,12 @@ jobs:
     timeout-minutes: 3
 
     steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v6
+
       - name: "🛠️ Set up environment"
         run: |
           mv .env.example .env
-      - name: "☁️ Checkout repository"
-        uses: actions/checkout@v4
 
       - name: "📦 Install pnpm"
         uses: pnpm/action-setup@v4
