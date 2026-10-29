@@ -12,10 +12,7 @@ export function mongodbPosts(db: Db): Loader {
       const ids = new Set<string>();
 
       for (const doc of docs) {
-        if (
-          typeof doc.slug !== "string" ||
-          doc.slug.trim().length === 0
-        ) {
+        if (typeof doc.slug !== "string" || doc.slug.trim().length === 0) {
           throw new Error(`Document slug is invalid, _id=${doc._id}`);
         }
 

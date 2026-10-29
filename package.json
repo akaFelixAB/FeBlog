@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "feblog",
   "type": "module",
   "version": "6.1.0",
   "engines": {
@@ -11,8 +11,8 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "format:check": "prettier --check .",
-    "format": "prettier --write .",
+    "format:check": "prettier --check . \"!mongo_data/**\"",
+    "format": "prettier --write . \"!mongo_data/**\"",
     "lint": "eslint ."
   },
   "dependencies": {

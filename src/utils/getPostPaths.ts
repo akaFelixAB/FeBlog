@@ -20,10 +20,7 @@ function getIdSlug(id: string): string {
   return postId.length > 0 ? String(postId[postId.length - 1]) : id;
 }
 
-function getPostSlugPath(
-  id: string,
-  filePath: string | undefined
-): string {
+function getPostSlugPath(id: string, filePath: string | undefined): string {
   if (!filePath) {
     return id;
   }
