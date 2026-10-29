@@ -1,32 +1,4 @@
 services:
-  site-build:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: source
-
-    restart: "no"
-
-    environment:
-      NODE_ENV: production
-      MONGODB_DB: "${MONGODB_DB:-feblog}"
-      MONGODB_URI: "mongodb://${MONGO_APP_USERNAME:?Set MONGO_APP_USERNAME}:${MONGO_APP_PASSWORD:?Set MONGO_APP_PASSWORD}@mongodb:27017/${MONGODB_DB:-feblog}?authSource=${MONGODB_DB:-feblog}"
-
-    command:
-      - sh
-      - -ec
-      - |
-        pnpm run build
-        find /site -mindepth 1 -delete
-        cp -a dist/. /site/
-
-    volumes:
-      - site_dist:/site
-
-    depends_on:
-      mongodb:
-        condition: service_healthy
-
   app:
     image: nginx:stable-alpine
     restart: unless-stopped
@@ -35,11 +7,9 @@ services:
       - "8080:80"
 
     volumes:
-      - site_dist:/usr/share/nginx/html:ro
-
-    depends_on:
-      site-build:
-        condition: service_completed_successfully
-
-volumes:
-  site_dist:
+      - type: bind
+        source: ./dist
+        target: /usr/share/nginx/html
+        read_only: true
+        bind:
+          create_host_path: false
