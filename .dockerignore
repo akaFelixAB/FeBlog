@@ -1,8 +1,16 @@
-# Ignore Astro files
-*.astro
-
-# Ignore node_modules directory
+# Ignore node_modules and build output directories
 node_modules/
-
-# Ignore build output
 dist/
+.astro/
+
+// Ignore log files
+.git/
+.env
+.env.*
+!.env.example
+
+// Ignore OS-specific files
+.DS_Store
+
+// MongoDB data directory
+mongo_data/

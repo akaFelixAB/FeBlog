@@ -1,36 +1,4 @@
 services:
-  app:
-    image: ghcr.io/pnpm/pnpm:11.3.0
-
-    ports:
-      - 4321:4321
-    working_dir: /app
-
-    command: >
-      bash -c "
-      pnpm runtime set node 24 -g
-      && pnpm install --frozen-lockfile
-      && pnpm prune
-      && pnpm run dev --host 0.0.0.0"
-
-    environment:
-      MONGODB_DB: "${MONGODB_DB:-feblog}"
-      MONGODB_URI: "mongodb://${MONGO_APP_USERNAME:?Set MONGO_APP_USERNAME}:${MONGO_APP_PASSWORD:?Set MONGO_APP_PASSWORD}@mongodb:27017/${MONGODB_DB:-feblog}?authSource=${MONGODB_DB:-feblog}"
-
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4321"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 60s
-
-    volumes:
-      - ./:/app
-      - /app/node_modules
-
-    depends_on:
-      mongodb:
-        condition: service_healthy
   mongodb:
 
     image: "${MONGO_IMAGE:-mongo:9.0.4}"
