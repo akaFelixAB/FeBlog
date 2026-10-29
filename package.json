@@ -1,5 +1,5 @@
 {
-  "name": "",
+  "name": "feblog",
   "type": "module",
   "version": "6.1.0",
   "engines": {
@@ -11,8 +11,8 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "format:check": "prettier --check .",
-    "format": "prettier --write .",
+    "format:check": "prettier --check . \"!mongo_data/**\"",
+    "format": "prettier --write . \"!mongo_data/**\"",
     "lint": "eslint ."
   },
   "dependencies": {
@@ -20,17 +20,18 @@
     "@astrojs/mdx": "^8.1.1",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "@tailwindcss/vite": "^4.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.4.2",
-    "dayjs": "^1.11.21",
+    "dayjs": "^1.11.23",
     "lodash.kebabcase": "^4.1.1",
+    "mongodb": "^7.7.0",
     "rehype-callouts": "^2.2.0",
     "remark-collapse": "^0.1.2",
     "remark-toc": "^9.0.0",
     "satori": "^0.26.0",
-    "sharp": "^0.35.2",
+    "sharp": "^0.35.5",
     "slugify": "^1.6.9",
-    "tailwindcss": "^4.3.2"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -38,13 +39,13 @@
     "@shikijs/transformers": "^4.5.0",
     "@tailwindcss/typography": "^0.5.20",
     "@types/lodash.kebabcase": "^4.1.9",
-    "@typescript-eslint/parser": "^8.62.0",
-    "eslint": "^10.6.0",
+    "@typescript-eslint/parser": "^8.72.1",
+    "eslint": "^10.13.0",
     "eslint-plugin-astro": "^2.1.1",
     "pagefind": "^1.5.2",
     "prettier": "3.9.3",
     "prettier-plugin-astro": "0.14.1",
-    "prettier-plugin-tailwindcss": "^0.8.0",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.3"
   }
 }

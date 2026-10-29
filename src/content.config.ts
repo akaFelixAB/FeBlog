@@ -2,11 +2,13 @@ import { defineCollection } from "astro:content";
 import { z } from "astro/zod";
 import { glob } from "astro/loaders";
 import config from "@/config";
+import { mongodbPostsFromEnv } from "./loaders/mongodbPostsFromEnv";
 
 export const BLOG_PATH = "src/content/posts";
 
 const posts = defineCollection({
-  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+  // loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
+  loader: mongodbPostsFromEnv(),
   schema: ({ image }) =>
     z.object({
       author: z.string().default(config.site.author),

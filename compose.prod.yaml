@@ -1,0 +1,15 @@
+services:
+  app:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+
+    ports:
+      - "8080:80"
+
+    volumes:
+      - type: bind
+        source: ./dist
+        target: /usr/share/nginx/html
+        read_only: true
+        bind:
+          create_host_path: false

@@ -1,17 +1,20 @@
 # Base stage for building the static files
-FROM node:lts AS base
+FROM node:lts-trixie-slim AS source
 WORKDIR /app
 
 # Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g corepack \
+    && corepack enable \
+    && corepack prepare pnpm@11.3.0 --activate
 
-COPY package.json pnpm-lock.yaml ./
+# Copy package.json and lock files to the working directory
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+
+# Install dependencies
 RUN pnpm install --frozen-lockfile
 
+# Copy the rest of the application code to the working directory
 COPY . .
-RUN pnpm run build
 
-# Runtime stage for serving the application
-FROM nginx:mainline-alpine-slim AS runtime
-COPY --from=base /app/dist /usr/share/nginx/html
-EXPOSE 80
+# Build stage for creating the production-ready static files
+CMD ["pnpm", "run", "build"]
